@@ -117,63 +117,7 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);color:var(--muted);border-top:1px sol
 
   <section id="work" data-s="1">
     <h2 class="rv">Selected work</h2>
-    <div class="cards">
-      <!-- PROJECT 1: change the image src and both button href values -->
-      <article class="card rv" style="--c:#1e3a8a">
-        <div class="media">
-          <img src="./barber.jpg" alt="Barber Shop project preview" loading="lazy">
-          <span class="media-label">BARBER SHOP</span>
-        </div>
-        <div class="body">
-          <h3>Barber Shop</h3>
-          <p>A clean, modern website for a barber shop.</p>
-          <div class="tags"><i>HTML</i><i>CSS</i><i>JavaScript</i></div>
-          <div class="project-links"><a class="demo" href="https://barber-sho-le2h.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a></div>
-        </div>
-      </article>
-
-      <!-- PROJECT 2: change the image src and both button href values -->
-      <article class="card rv" style="--c:#0891b2">
-        <div class="media">
-          <img src="./codecraft.jpg" alt="CODECRAFT project preview" loading="lazy">
-          <span class="media-label">CODECRAFT</span>
-        </div>
-        <div class="body">
-          <h3>CODECRAFT</h3>
-          <p>A learning platform for web and app development.</p>
-          <div class="tags"><i>HTML</i><i>CSS</i><i>JavaScript</i></div>
-          <div class="project-links"><a class="demo" href="https://code-craft-coral.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a></div>
-        </div>
-      </article>
-
-      <!-- PROJECT 3: change the image src and both button href values -->
-      <article class="card rv" style="--c:#047857">
-        <div class="media">
-          <img src="./Screenshot 2026-10-16 200527.png" alt="INFINITY project preview" loading="lazy">
-          <span class="media-label">INFINITY</span>
-        </div>
-        <div class="body">
-          <h3>INFINITY</h3>
-          <p>A simple, modern pharmacy website.</p>
-          <div class="tags"><i>HTML</i><i>CSS</i><i>JavaScript</i></div>
-          <div class="project-links"><a class="demo" href="https://infinity-djdh.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a></div>
-        </div>
-      </article>
-
-      <!-- PROJECT 4: change the image src and both button href values -->
-      <article class="card rv" style="--c:#be185d">
-        <div class="media">
-          <img src="./Screenshot 2026-10-16 200126.png" alt="TITAN BRAND project preview" loading="lazy">
-          <span class="media-label">TITAN BRAND</span>
-        </div>
-        <div class="body">
-          <h3>TITAN BRAND</h3>
-          <p>A stylish online clothing store.</p>
-          <div class="tags"><i>HTML</i><i>CSS</i><i>JavaScript</i></div>
-          <div class="project-links"><a class="demo" href="https://titanss-hazel.vercel.app/" target="_blank" rel="noopener">Live Demo ↗</a></div>
-        </div>
-      </article>
-    </div>
+    <div class="cards" id="projects"></div>
   </section>
 
   <section id="skills" data-s="2">
@@ -236,6 +180,45 @@ footer{padding:2rem clamp(1.2rem,5vw,4rem);color:var(--muted);border-top:1px sol
 </main>
 <div id="lb"><img alt="Certificate full size"></div>
  
+
+<script src="projects.js"></script>
+<script>
+/* Projects: saved by admin.html in this browser > projects.js > built-in list */
+(function(){
+  var DEF=[
+    {id:"p1",title:"Barber Shop",desc:"A clean, modern website for a barber shop.",tags:["HTML","CSS","JavaScript"],img:"./barber.jpg",demo:"https://barber-sho-le2h.vercel.app/",repo:"",color:"#1e3a8a"},
+    {id:"p2",title:"CODECRAFT",desc:"A learning platform for web and app development.",tags:["HTML","CSS","JavaScript"],img:"./codecraft.jpg",demo:"https://code-craft-coral.vercel.app/",repo:"",color:"#0891b2"},
+    {id:"p3",title:"INFINITY",desc:"A simple, modern pharmacy website.",tags:["HTML","CSS","JavaScript"],img:"./Screenshot 2026-10-16 200527.png",demo:"https://infinity-djdh.vercel.app/",repo:"",color:"#047857"},
+    {id:"p4",title:"TITAN BRAND",desc:"A stylish online clothing store.",tags:["HTML","CSS","JavaScript"],img:"./Screenshot 2026-10-16 200126.png",demo:"https://titanss-hazel.vercel.app/",repo:"",color:"#be185d"}
+  ];
+  var list=DEF;
+  try{
+    var saved=JSON.parse(localStorage.getItem("shno-projects"));
+    if(Array.isArray(saved))list=saved;
+    else if(Array.isArray(window.SHNO_PROJECTS))list=window.SHNO_PROJECTS;
+  }catch(e){if(Array.isArray(window.SHNO_PROJECTS))list=window.SHNO_PROJECTS}
+  var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+  var url=function(u){u=String(u||"").trim();return /^https?:\/\//i.test(u)?u:""};
+  var src=function(v){v=String(v||"").trim();if(!v)return"";return /^(data:image\/|https?:\/\/|\.?\/)/i.test(v)?v:"./"+encodeURI(v)};
+  var color=function(c){return /^#[0-9a-f]{6}$/i.test(c||"")?c:"#0891b2"};
+  var box=document.getElementById("projects");
+  if(!box)return;
+  if(!list.length){box.innerHTML='<p class="hint">No projects yet. Check back soon.</p>';return}
+  box.innerHTML=list.map(function(p){
+    var img=src(p.img),demo=url(p.demo),repo=url(p.repo);
+    var tags=(p.tags||[]).map(function(t){return"<i>"+esc(t)+"</i>"}).join("");
+    var links=(demo?'<a class="demo" href="'+esc(demo)+'" target="_blank" rel="noopener">Live Demo \u2197</a>':"")+
+              (repo?'<a class="demo" href="'+esc(repo)+'" target="_blank" rel="noopener">Code \u2197</a>':"");
+    return '<article class="card rv" style="--c:'+color(p.color)+'">'+
+      '<div class="media">'+(img?'<img src="'+esc(img)+'" alt="'+esc(p.title)+' project preview" loading="lazy">':"")+
+      '<span class="media-label">'+esc(String(p.title).toUpperCase())+'</span></div>'+
+      '<div class="body"><h3>'+esc(p.title)+'</h3><p>'+esc(p.desc)+'</p>'+
+      (tags?'<div class="tags">'+tags+'</div>':"")+
+      (links?'<div class="project-links">'+links+'</div>':"")+
+      '</div></article>';
+  }).join("");
+})();
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
